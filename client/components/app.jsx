@@ -1,4 +1,5 @@
 const {
+  Paper,
   List,
   ListItem,
   ListDivider,
@@ -40,20 +41,18 @@ App = React.createClass({
   },
 
   loadThemes() {
-    var themes = Meteor.call("loadThemes", function(err, res) {
+    themes = Meteor.call("loadThemes", function(err, res) {
       if (err) {
         console.log(err);
-        return;
       } else {
-        console.log(res.data)
-        var i, len, ref, theme;
-
-        ref = res.data["new-files"];
-        for (i = 0, len = ref.length; i < len; i++) {
-          theme = ref[i];
-          Themes.insert(theme);
-        }
-
+        console.log(res.data["new-files"]);
+        write = Meteor.call("writeThemes", res.data["new-files"], function(error, result) {
+          if(error) {
+            console.log(error);
+          } else {
+            console.log(result.data);
+          }
+        });
       }
     });
   },
@@ -61,30 +60,26 @@ App = React.createClass({
   render() {
     return (
       <div className="container">
-        <div className="row">
-          <div className="col-md-12">
-            <div className="box">
-              <AppBar
-                title="Pxls" iconElementRight={<FlatButton  onClick={this.loadThemes()}  label="Reload" />} />
-            </div>
-          </div>
-        </div>
+        <AppBar zDepth={0}
+          title="Pxls" iconElementRight={<FlatButton label="Reload" onClick={this.loadThemes} />} />
 
         <div className="row">
-          <div className="col-md-3">
+          <div className="col-md-5">
             <div className="box">
-              <List subheader="New">
-                {this.renderThemes()}
-              </List>
+              <Paper zDepth={1}>
+                <List subheader="New Themes">
+                  {this.renderThemes()}
+                </List>
+            </Paper>
             </div>
           </div>
 
-          <div className="col-md-3">
+          <div className="col-md-4">
             <div className="box">Col</div>
           </div>
 
           <div className="col-md-3">
-            <div className="box">col2</div>
+            <div className="box">Col</div>
           </div>
 
         </div>

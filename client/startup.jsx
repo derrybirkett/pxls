@@ -3,3 +3,5 @@ Meteor.startup(function () {
   injectTapEventPlugin();
   React.render(<App />, document.getElementById("app"));
 });
+
+Meteor.subscribe("themes");

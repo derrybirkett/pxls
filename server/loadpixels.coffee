@@ -1,5 +1,8 @@
+Meteor.publish "themes", (args) ->
+  Themes.find()
+
 Meteor.methods
-  loadThemes: (item) ->
+  loadThemes: ->
     @unblock()
     Meteor.http.call 'GET', 'https://api.envato.com/v1/market/new-files:themeforest,wordpress.json',
       headers:
@@ -7,4 +10,4 @@ Meteor.methods
 
   writeThemes: (themes) ->
     Themes.remove({})
-    Themes.insert theme for theme in themes["new-files"]
+    Themes.insert theme for theme in themes

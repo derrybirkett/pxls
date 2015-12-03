@@ -34,6 +34,10 @@ App = React.createClass({
     };
   },
 
+  componentDidMount() {
+    {this.loadThemes()}
+  },
+
   renderThemes() {
     return this.data.themes.map((theme) => {
       return <Theme key={theme._id} theme={theme} />
@@ -60,26 +64,16 @@ App = React.createClass({
   render() {
     return (
       <div className="container">
-        <AppBar zDepth={0}
-          title="Pxls" iconElementRight={<FlatButton label="Reload" onClick={this.loadThemes} />} />
-
         <div className="row">
-          <div className="col-md-5">
+          <div className="col-md-5 col-md-offset-4">
+            <FlatButton label="Pixel Supply" />
             <div className="box">
-              <Paper zDepth={1}>
-                <List subheader="New Themes">
+              <Paper zDepth={0}>
+                <List subheader="Favourite New Wordpress Theme Finds">
                   {this.renderThemes()}
                 </List>
             </Paper>
             </div>
-          </div>
-
-          <div className="col-md-4">
-            <div className="box">Col</div>
-          </div>
-
-          <div className="col-md-3">
-            <div className="box">Col</div>
           </div>
 
         </div>
